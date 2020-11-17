@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.admin.customer.dao.AdminCustomerDAO">
+
+	<!-- 게시판 리스트 조회(검색 부분 추가) -->
+	<select id="adminCustomerList" parameterType="adminCustomer" resultType="adminCustomer">
+		SELECT c_num, c_id, c_name, c_phone, c_address1, c_address2, c_address3, c_address4, 
+		to_char(c_date, 'YYYY-MM-DD') as c_date FROM CUSTOMER
+		<!-- <where>
+			<if test="search=='c_id'">
+				<![CDATA[ c_id LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='c_name'">
+				<![CDATA[ c_name LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='c_phone'">
+				<![CDATA[ c_phone LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</where> -->
+		ORDER BY c_num desc
+	</select>
+	
+	<select id="adminCustomerDetail" parameterType="adminCustomer" resultType="adminCustomer">
+		/* Board - adminCustomerDetail */
+		SELECT
+			c_num, c_id, c_name, c_phone, c_address1, c_address2, c_address3, c_address4,
+			to_char(c_date, 'YYYY-MM-DD') as c_date
+		FROM CUSTOMER
+		WHERE c_num = #{c_num}
+	</select>
+	
+	<select id="adminOrderList" parameterType="adminCustomer" resultType="listvo">
+		select orderlist.o_num, orderlist.p_num, o_date, p_name, l_price
+		from orderlist inner join product
+		on orderlist.p_num = product.p_num
+		inner join orderinfo
+		on orderlist.o_num = orderinfo.o_num
+		where orderlist.c_num = #{c_num}
+		
+	</select>
+	
+	<!-- 구매 상품 리스트 불러오기
+	<select id="buyProductList" parameterType="adminCustomer" 
+	 -->
+	<!-- 회원 탈퇴 
+	<delete id=""-->
+	<!-- 회원구매이력조회 -->
+	<select id="customerDeleteCheck" parameterType="int" resultType="int">
+		select count(c_num) as cnt from list where c_num = #{c_num}				
+	</select>
+	
+	<!-- 구매이력없는 회원 탈퇴 처리 -->
+	<delete id="customerDelete" parameterType="adminCustomer">
+		delete from customer where c_num = #{c_num}
+	</delete>
+
+	<!-- 구매이력이 있는 회원 탈퇴 처리 -->
+	<update id="customerDeleteName" parameterType="adminCustomer">
+		update customer set c_name='(탈퇴회원)' where c_num = #{c_num}
+	</update>
+
+</mapper>

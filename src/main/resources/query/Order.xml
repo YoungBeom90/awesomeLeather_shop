@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.admin.order.dao.OrderDAO">
+	<select id="orderList" resultType="order">
+		select o_num, customer.c_name as c_name, b_num, p_num, o_state, o_pay,
+		to_char(o_date, 'YYYY-MM-DD HH24:MI:SS') as o_date 
+		from orderinfo left outer join customer on orderinfo.c_num = customer.c_num
+		order by o_num desc
+	</select>
+	
+	<select id="orderDetail" parameterType="order" resultType="orderList">
+		select l.l_num as l_num, l.l_name as l_name, l.l_price as l_price, l.l_color as l_color, l.l_size as l_size, l.l_cnt as l_cnt,
+		i.o_address1 as o_address1,i.o_address2 as o_address2,i.o_address3 as o_address3,i.o_address4 as o_address4, i.o_name as o_name, i.o_phone as o_phone
+		from orderinfo  i left outer join orderlist l 
+		on i.o_num = l.o_num
+		where i.o_num = #{o_num}
+	</select>
+	
+	<update id="statePayUpdate" parameterType="order">
+		update orderinfo set o_state = 2 where o_num = #{o_num}
+	</update>
+	
+	<update id="stateDeliUpdate" parameterType="order">
+		update orderinfo set o_state = 3 where o_num = #{o_num}
+	</update>
+	
+	<update id="stateCancelUpdate" parameterType="order">
+		update orderinfo set o_state = 4 where o_num = #{o_num}
+	</update>
+</mapper>

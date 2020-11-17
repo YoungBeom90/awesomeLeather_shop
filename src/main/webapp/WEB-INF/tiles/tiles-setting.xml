@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+  "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+  "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+  
+<tiles-definitions>
+	<!-- <definition name="content" template="/WEB-INF/views/template/client/contentLayout.jsp">
+		<put-attribute name="title"></put-attribute>
+	</definition> -->
+	<definition name="/home" template="/WEB-INF/views/templete/client/mainLayout.jsp">
+		<put-attribute name="title" value="AwesomeLeather Page" />
+		<put-attribute name="header" value="/WEB-INF/views/templete/client/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/client/footer.jsp" />
+	</definition>
+	
+	<definition name="content" template="/WEB-INF/views/templete/client/contentLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/templete/client/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/client/footer.jsp" />
+	</definition>
+	
+	
+	<definition name="clientProduct/*" extends="content">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="body" value="/WEB-INF/views/clientProduct/{1}.jsp" />
+	</definition>
+	<definition name="/clientCustomer/*" extends="content">
+		<put-attribute name="title" value=""/>
+		<put-attribute name="body" value="/WEB-INF/views/clientCustomer/{1}.jsp" />
+	</definition> 
+	
+	
+	<!-- 준한 현정 -->
+	<!-- <definition name="/admin" template="/WEB-INF/views/templete/admin/mainLayout.jsp">
+		<put-attribute name="title" value="AwesomeLeather AdminPage" />
+		<put-attribute name="header" value="/WEB-INF/views/templete/admin/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/admin/footer.jsp" />
+	</definition> -->
+	
+	<definition name="adminContent" template="/WEB-INF/views/templete/admin/contentLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/templete/admin/header.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/admin/footer.jsp" />
+	</definition>
+	
+	<definition name="admin/*" extends="adminContent">
+		<put-attribute name="body" value="/WEB-INF/views/product/{1}.jsp" />
+	</definition>
+	
+	<definition name="/adminCustomer/*" extends="adminContent">
+		<put-attribute name="body" value="/WEB-INF/views/adminCustomer/{1}.jsp" />
+	</definition>
+	
+	<!-- 영범 -->
+	<definition name="/admin" template="/WEB-INF/views/templete/admin/mainLayout.jsp">
+		<put-attribute name="title" value="AwesomeLeather AdminPage" />
+		<put-attribute name="header" value="/WEB-INF/views/templete/admin/header.jsp" />
+		<put-attribute name="aside" value="/WEB-INF/views/templete/admin/aside.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/admin/footer.jsp" />
+	</definition>
+	
+	<definition name="adminContent" template="/WEB-INF/views/templete/admin/contentLayout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/templete/admin/header.jsp" />
+		<put-attribute name="aside" value="/WEB-INF/views/templete/admin/aside.jsp" />
+		<put-attribute name="body" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/templete/admin/footer.jsp" />
+	</definition>
+	
+	<definition name="product/*" extends="adminContent">
+		<put-attribute name="body" value="/WEB-INF/views/product/{1}.jsp" />
+	</definition>
+	
+	<definition name="order/*" extends="adminContent">
+		<put-attribute name="body" value="/WEB-INF/views/order/{1}.jsp" />
+	</definition>
+	
+</tiles-definitions>

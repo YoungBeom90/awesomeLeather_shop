@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.admin.stats.dao.AdminStatsDAO">
+	
+	<!-- 총 회원수 -->
+	<select id="adminStatsCustomerTotal" resultType="int">
+		select count(c_num) as customer_total from customer
+	</select>
+
+	<!-- 총 매출액 -->
+	<select id="adminStatsPriceTotal" resultType="int">
+		select sum(l_price) as price_total from list
+	</select>
+
+	<!-- 총 주문 건수 -->
+	<select id="adminStatsListTotal" resultType="int">
+		select count(o_num) as list_total from ordertable
+	</select>
+	
+	<!-- 판매중인 상품 수 -->
+	<select id="adminStatsProductTotal" resultType="int">
+		select count(p_num) as product_total from product 
+		where p_state = 1
+	</select>
+	
+	
+	
+	
+	<!-- 오늘 가입자 수 -->
+	<select id="adminStatsCustomerToday" resultType="int">
+		select count(c_num) as customer_total from customer where to_char(c_date, 'YYYY-MM-DD')= to_char(sysdate, 'YYYY-MM-DD')
+	</select>
+	
+	<!-- 오늘 매출액 -->
+	<select id="adminStatsPriceToday" resultType="int">
+	select sum(l_price) as price_today from list li inner join ordertable ord 
+	on li.o_num=ord.o_num where to_char(o_date, 'YYYY-MM-DD')= to_char(sysdate, 'YYYY-MM-DD')
+	</select>
+	
+	<!-- 오늘 주문 건수 -->
+	<select id="adminStatsListToday" resultType="int">
+	select count(o_num) as list_today from ordertable where to_char(o_date, 'YYYY-MM-DD')= to_char(sysdate, 'YYYY-MM-DD')
+	</select>
+	
+	<!-- 배송 대기 건수 -->
+	<select id="adminStatsDeliveryWait" resultType="int">
+		select count(o_num) from ordertable where o_state = 1
+	</select>
+
+	
+
+
+
+
+</mapper>

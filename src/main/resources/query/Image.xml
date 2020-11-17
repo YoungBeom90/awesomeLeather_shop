@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.common.image.dao.ImageDAO">
+	
+	<!-- 상품 이미지 구현 -->
+	<select id="imageList" parameterType="image" resultType="image">
+		SELECT p_num, i_address FROM image order by p_num
+	</select>
+
+
+
+
+
+
+	<!-- 영범 -->
+	
+	<resultMap type="image" id="image">
+		<result property="i_num" column="i_num" />
+		<result property="p_num" column="p_num" />
+		<result property="i_name" column="i_name" />
+		<result property="i_address" column="i_address" />
+		<result property="i_type" column="i_type" />
+		<result property="i_ex" column="i_ex" />
+	</resultMap>
+<!-- 	
+	<insert id="imagesInsert" parameterType="image">
+		<selectKey keyProperty="i_num" resultType="int" order="BEFORE">
+			select image_seq.nextval from dual
+		</selectKey>
+		insert into image(i_num, p_num, i_name, i_address, i_type, i_ex)
+		values (#{i_num}, #{p_num}, #{i_name}, #{i_address,jdbcType=VARCHAR}, #{i_type}, #{i_ex})
+	</insert> -->
+	
+	
+	
+	<insert id="imagesInsert" parameterType="java.util.List">
+		insert into image(i_num, p_num, i_name, i_address, i_type, i_ex)
+		select image_seq.nextval, I.* from(
+		<foreach item="item" collection="list" separator="UNION ALL ">
+			select 
+				#{item.p_num} as p_num,
+				#{item.i_name} as i_name,
+				#{item.i_address} as i_address,
+				#{item.i_type} as i_type,
+				#{item.i_ex} as i_ex
+			from dual
+		</foreach>) I
+	</insert>
+</mapper>

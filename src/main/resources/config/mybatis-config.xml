@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<typeAliases>
+		<typeAlias type="com.awesomeLeather.common.product.vo.ProductVO" alias="product" />
+		<typeAlias type="com.awesomeLeather.common.image.vo.ImageVO" alias="image" />
+		
+		<!-- 현정 준한 -->
+		<typeAlias type="com.awesomeLeather.admin.customer.vo.AdminCustomerVO" alias="adminCustomer" />
+		<typeAlias type="com.awesomeLeather.client.basket.vo.BasketVO" alias="basket" />
+		<typeAlias type="com.awesomeLeather.client.customer.vo.CustomerVO" alias="customer" />
+		<typeAlias type="com.awesomeLeather.client.list.vo.ListVO" alias="listvo" />
+		<typeAlias type="com.awesomeLeather.client.ordertable.vo.OrdertableVO" alias="ordertable" />
+		<typeAlias type="com.awesomeLeather.client.orderdetail.vo.OrderDetailVO" alias="orderdetail" />
+		
+		<!-- 영범 -->
+		<typeAlias type="com.awesomeLeather.admin.order.vo.OrderVO" alias="order" />
+		<typeAlias type="com.awesomeLeather.admin.list.vo.OrderListVO" alias="orderList" />
+	</typeAliases>
+</configuration>

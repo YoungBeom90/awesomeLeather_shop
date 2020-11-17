@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.client.list.dao.ListDAO">
+	<select id="orderList" parameterType="int" resultType="listvo">
+		select o.o_num, o_date, l_name, l_color, l_size, l_cnt, o_state 
+		from ordertable o join list l 
+		on o.o_num = l.o_num
+		  
+		where  o_num = #{o_num}
+	
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.client.ordertable.dao.OrdertableDAO">
+	<select id="ordertableList" parameterType="ordertable" resultType="ordertable">
+		select orderlist.o_num, o_date, l_name, l_color, l_size, l_cnt, l_price, o_state
+		from orderlist inner join orderinfo
+		on orderlist.o_num = orderinfo.o_num
+		where orderlist.c_num=#{c_num} 
+	
+	</select>
+	<delete id="deleteOrderList" parameterType="int">
+		delete from orderlist where o_num=#{o_num}
+	</delete>
+	<delete id="deleteOrdertable" parameterType="int">
+		delete from orderinfo where o_num=#{o_num}
+	</delete>
+	<select id="orderDetail" parameterType="int" resultType="ordertable">
+		select orderlist.o_num,  o_date, l_name, l_color, l_size, l_cnt, l_price, o_state, o_name, o_phone, o_address1, o_address2, o_address3, o_address4
+		from orderlist inner join orderinfo
+		on orderlist.o_num = orderinfo.o_num
+		where orderlist.o_num=#{o_num} 
+	</select>
+	
+	<select id="orderForm" parameterType="basket" resultType="basket">
+		select c_name, c_phone, p_name, b_cnt, b_price, b_color
+		from basket inner join customer
+		on basket.c_num = customer.c_num
+		inner join product
+		on basket.p_num = product.p_num
+		where b_num = #{b_num}
+		
+	</select>
+	<!-- <insert id="orderInsert" >
+		<foreach collection = "baskets" item="basket" index="order_o_num_pk" open="insert all " seperator=" " close="select * from dual ">
+			into orderinfo
+		</foreach>
+		
+		insert into orderinfo(o_num, o_state,  c_num, o_pay, o_name, o_phone, o_address1, o_address2, o_address3, o_address4, p_num, b_num)
+		values(order_seq.nextval, 0, #{c_num}, #{o_pay}, #{o_name}, #{o_phone}, #{o_address1}, #{o_address2}, #{o_address3}, #{o_address4}, #{p_num}, #{b_num})
+	</insert> -->
+	
+	<insert id="orderInsertDetail" parameterType="orderdetail" >
+		insert into orderdetail(d_num, c_num,p_num, d_cnt)
+			select detail_seq.nextval, #{c_num}, p_num, d_cnt
+			from basket
+	</insert>
+	
+	
+
+</mapper>
+							

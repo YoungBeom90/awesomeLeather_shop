@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.common.product.dao.ProductDAO">
+	<!--   상품 리스트, 상품이름 조회-->
+	<select id="clientProductList" parameterType="product" resultType="product">
+		SELECT p_num, p_name, p_price, p_color, p_category FROM product
+	
+		<!----> <where>
+			<if test="search=='p_name'">
+				<![CDATA[p_name LIKE '%'|| #{keyword} || '%']]>
+			</if>
+		</where> 
+		ORDER BY p_num desc
+	</select>
+	<!-- 상품 상세페이지 데이터 조회 -->
+	<select id="clientProductDetail" parameterType="product" resultType="product">
+		select p_num, p_name, p_price, p_color, p_size, p_ex_top, p_ex_bottom, p_category from product where p_num = #{p_num} order by p_num
+	</select>
+	
+	<select id="imageDetail" parameterType="product" resultType="image">
+		select * from image where p_num = #{p_num} order by i_num
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 영범 -->
+	
+	
+	
+	<!-- 상품 리스트 출력 -->
+	<select id="productList" parameterType="product" resultType="product">
+		select  p_num, p_name, p_color, p_size, p_category, p_state, p_price, p_ex_top, p_ex_bottom from product
+		<where>
+			<if test="search=='p_num'">
+				<![CDATA[p_num LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='p_name'">
+				<![CDATA[p_name LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='p_category'">
+				<![CDATA[p_category LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+			<if test="search=='p_price'">
+				<![CDATA[p_price LIKE '%'|| #{keyword} ||'%']]>
+			</if>
+		</where>
+		<!-- <if test="search != ''">
+			AND p_state = 1
+		</if> -->
+		order by p_num desc
+	</select>
+	
+	<!-- 상품 상세 내역 출력 -->
+	<select id="productDetail" parameterType="product" resultType="product">
+		select p_num, p_name, p_color, p_size, p_category, p_state, p_price, p_ex_top, p_ex_bottom
+		from product
+		where p_num = #{p_num}
+	</select>
+	
+	<select id="detailImages" parameterType="product" resultType="string">
+		select i_name as p_images from image where p_num = #{p_num}
+	</select>
+	
+	<!-- 신규 상품 번호 가져오기 -->
+	<select id="productNumber" resultType="int">
+		select product_seq.nextval from dual
+	</select>
+	
+	<!--신규 상품 내역 등록 -->
+	<insert id="productInsert" parameterType="product">
+		insert into product(p_num, p_name, p_price, p_color, p_category, p_state, p_size, p_ex_top, p_ex_bottom)
+		values (#{p_num}, #{p_name}, #{p_price}, #{p_color}, #{p_category}, #{p_state}, #{p_size}, #{p_ex_top}, #{p_ex_bottom})
+	</insert>
+	
+	<update id="statePause" parameterType="product">
+		update product set p_state = 2 where p_num = #{p_num}
+	</update>
+	
+	<update id="stateSell" parameterType="product">
+		update product set p_state = 1 where p_num = #{p_num}
+	</update>
+</mapper>

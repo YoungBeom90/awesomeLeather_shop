@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.client.customer.dao.CustomerDAO">
+	<!-- 회원가입 -->
+	<insert id="customerInsert" parameterType="customer">
+		/* customer - customerInsert*/
+		insert into customer(c_num, c_id, c_pw, c_name, c_phone, c_address1, c_address2, c_address3, c_address4, c_echeck)
+		VALUES (customer_seq.nextval, #{c_id}, #{c_pw},#{c_name},#{c_phone},#{c_address1},#{c_address2}, #{c_address3}, #{c_address4}, #{c_echeck})
+	</insert>
+	
+	<!-- 로그인 정보 확인 -->
+	<select id="loginCheck" parameterType="customer" resultType="int">
+		/*customer - loginCheck*/
+		select nvl((
+						select 1 from customer
+						where c_id = #{c_id} and c_pw = #{c_pw}
+					),0) as state
+		from dual	
+		
+	</select>
+	
+	<select id="idCheck" parameterType="customer" resultType="int">
+		/*customer - loginCheck*/
+		select nvl((
+						select 1 from customer
+						where c_id = #{c_id} 
+					),0) as state
+		from dual	
+		
+	</select>
+	
+	<select id="login" parameterType="customer" resultType="customer">
+		select c_num, c_id, c_name, c_phone, c_address1, c_address2, c_address3, c_address4
+		from customer
+		where c_id=#{c_id} and c_pw=#{c_pw}
+	</select>
+	
+	
+	<update id="customerUpdate" parameterType="customer">
+		/* customer -customerUpdate */
+		update customer
+		set c_phone = #{c_phone}
+			,c_address1 = #{c_address1}
+			,c_address2 = #{c_address2}
+			,c_address3 = #{c_address3}
+			,c_address4 = #{c_address4}
+			,c_echeck = #{c_echeck}
+			<if test="c_pw!=''">
+				,c_pw=#{c_pw}
+			</if>
+		where c_num=#{c_num}	
+	</update>
+	<select id="updateList" parameterType="customer" resultType="customer">
+		select c_id, c_name, c_phone, c_address1, c_address2,c_address3, c_address4, c_echeck
+		from customer
+		where c_num = #{c_num}
+	</select>
+	
+
+
+
+
+</mapper>

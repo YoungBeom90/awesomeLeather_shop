@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.awesomeLeather.client.basket.dao.BasketDAO">
+
+	<insert id="basketInsert" parameterType="int" >
+		insert into basket(b_num, c_num, p_num, b_color, b_cnt, b_size, b_price)
+		values(basket_seq.nextval, #{c_num}, #{p_num}, #{b_color}, #{b_cnt}, #{b_size}, #{b_price})
+	</insert>
+	
+	
+	<select id="basketList" parameterType="basket" resultType="basket">
+		select b_num, p_name, b_color, b_size, b_cnt, b_price
+		from basket inner join product 
+		on basket.p_num = product.p_num
+		where basket.c_num = #{c_num}		
+	</select>
+	
+	
+	
+
+
+</mapper>
